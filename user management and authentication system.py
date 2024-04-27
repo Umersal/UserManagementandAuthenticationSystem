@@ -212,7 +212,7 @@ class User:
                 
     
         
-@app.route("/users/create")
+@app.route("/users/create", methods=['POST'])
 def create_user():
     data = request.get_json()
     if data['name'] == '' or data['email'] == '' or data['password'] == '':
@@ -227,7 +227,7 @@ def create_user():
     else:   
         return jsonify({"error": insertUser[1]}), 400
     
-@app.route('/users/update/<int:user_id>')
+@app.route('/users/update/<int:user_id>', methods=['PUT'])
 def update_user(user_id):
     data = request.get_json()
     name = None
@@ -246,7 +246,7 @@ def update_user(user_id):
     else:
         return jsonify({"error": existing_user[1]}), 400
     
-@app.route('/users/delete/<int:user_id>')
+@app.route('/users/delete/<int:user_id>', methods=['DELETE'])
 def delete_user(user_id):
     delete_user = User(name = None, email = None, password = None)
     deleting_user = delete_user.deleteUser(user_id)
@@ -255,7 +255,7 @@ def delete_user(user_id):
     else:
         return jsonify({"error": existing_user[1]}), 400
     
-@app.route('/users/list')
+@app.route('/users/list', methods=['GET'])
 def list_users():
     user = User(name=None, email=None, password=None) 
     user_list = user.listUsers() 
@@ -264,7 +264,7 @@ def list_users():
     else:
         return jsonify({"error": "Failed to retrieve user list"}), 500
     
-@app.route('/users/login')
+@app.route('/users/login', methods=['POST'])
 def login():
     data = request.get_json()
     if data['email'] == '' or data['password'] == '':
